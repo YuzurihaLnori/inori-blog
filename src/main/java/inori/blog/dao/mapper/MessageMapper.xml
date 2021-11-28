@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.MessageMapper">
+
+
+
+    <resultMap id="messageMap" type="inori.blog.transfer.message.MessageListOutVoRecords">
+        <id property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="avatar" column="avatar"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="content" column="content"/>
+        <result property="isBlogger" column="is_blogger"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="messageReplyList" javaType="List" ofType="inori.blog.transfer.message.MessageListOutVoRecords" select="messageReplyList" column="id">
+            <id property="id" column="id"/>
+            <result property="pid" column="pid"/>
+            <result property="avatar" column="avatar"/>
+            <result property="nickName" column="nick_name"/>
+            <result property="email" column="email"/>
+            <result property="content" column="content"/>
+            <result property="isBlogger" column="is_blogger"/>
+            <result property="createTime" column="create_time"/>
+            <collection property="messageReplyList" javaType="List" select="messageReplyList" column="id"/>
+        </collection>
+    </resultMap>
+
+
+
+    <select id="messageList" parameterType="inori.blog.transfer.message.MessageListInVo" resultMap="messageMap">
+
+        SELECT
+            m.id, m.pid, m.avatar, m.nick_name, m.email, m.content, m.is_blogger, m.create_time
+        FROM tb_message AS m
+        WHERE m.pid = -1
+        ORDER BY m.create_time DESC
+
+    </select>
+
+
+
+    <select id="messageReplyList" resultMap="messageMap">
+
+        SELECT
+            m.id, m.pid, m.avatar, m.nick_name, m.email, m.content, m.is_blogger, m.create_time
+        FROM tb_message AS m WHERE m.pid = #{id}
+
+    </select>
+
+
+
+    <select id="getTotalNumber" resultType="java.lang.Integer">
+
+        SELECT COUNT(1) FROM tb_message
+
+    </select>
+
+
+
+    <insert id="messageCreate" parameterType="inori.blog.transfer.message.MessageCreateInVo">
+
+        INSERT INTO tb_message (pid, avatar, nick_name, email, content) VALUES (#{pid}, #{avatar}, #{nickName}, #{email}, #{content})
+
+    </insert>
+
+
+
+    <delete id="messageDelete" parameterType="inori.blog.transfer.message.MessageDeleteInVo">
+
+        DELETE FROM tb_message WHERE id = #{id}
+
+    </delete>
+
+
+
+</mapper>

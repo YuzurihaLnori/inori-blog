@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.BlogMapper">
+
+
+
+    <select id="blogDetail" parameterType="inori.blog.transfer.blog.BlogDetailInVo" resultType="inori.blog.transfer.blog.BlogDetailOutVo">
+
+        SELECT
+            r.path AS firstPicturePath, b.title, CONCAT("Inoriの", b.title) AS htmlTitle,
+            DATE_FORMAT(b.create_time, '%Y-%m-%d') AS createTime, b.content
+        FROM tb_blog AS b
+            LEFT JOIN tb_res AS r ON b.first_picture = r.id
+        WHERE b.id = #{blogId}
+
+    </select>
+
+
+
+    <update id="blogViews" parameterType="java.lang.Integer">
+
+        UPDATE tb_blog SET views = views + 1 WHERE id = #{blogId}
+
+    </update>
+
+
+
+    <resultMap id="blogRecommendMap" type="inori.blog.transfer.blog.BlogRecommendOutVo">
+        <result property="views" column="views"/>
+        <association property="previous" javaType="inori.blog.transfer.blog.BlogRecommendOutVoPrevious" select="blogRecommendPrevious" column="id"/>
+        <association property="next" javaType="inori.blog.transfer.blog.BlogRecommendOutVoNext" select="blogRecommendNext" column="id"/>
+    </resultMap>
+
+
+
+    <select id="blogRecommend" parameterType="inori.blog.transfer.blog.BlogRecommendInVo" resultMap="blogRecommendMap">
+
+        SELECT b.id, b.views FROM tb_blog AS b WHERE b.id = #{blogId}
+
+    </select>
+
+
+    <select id="blogRecommendPrevious" resultType="inori.blog.transfer.blog.BlogRecommendOutVoPrevious">
+
+        SELECT
+            b.id, r.path AS firstPicturePath, b.title
+        FROM tb_blog AS b
+            LEFT JOIN tb_res AS r ON b.first_picture = r.id
+        WHERE b.id &lt; #{id}
+        ORDER BY b.id DESC LIMIT 1
+
+    </select>
+
+
+
+    <select id="blogRecommendNext" resultType="inori.blog.transfer.blog.BlogRecommendOutVoNext">
+
+        SELECT
+            b.id, r.path AS firstPicturePath, b.title
+        FROM tb_blog AS b
+            LEFT JOIN tb_res AS r ON b.first_picture = r.id
+        WHERE b.id &gt; #{id}
+        ORDER BY b.id ASC LIMIT 1
+
+    </select>
+
+
+
+    <resultMap id="commentMap" type="inori.blog.transfer.blog.CommentListOutVoRecords">
+        <id property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="avatar" column="avatar"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="content" column="content"/>
+        <result property="isBlogger" column="is_blogger"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="commentReplyList" javaType="List" ofType="inori.blog.transfer.blog.CommentListOutVoRecords" select="commentReplyList" column="id">
+            <id property="id" column="id"/>
+            <result property="pid" column="pid"/>
+            <result property="avatar" column="avatar"/>
+            <result property="nickName" column="nick_name"/>
+            <result property="email" column="email"/>
+            <result property="content" column="content"/>
+            <result property="isBlogger" column="is_blogger"/>
+            <result property="createTime" column="create_time"/>
+            <collection property="commentReplyList" javaType="List" select="commentReplyList" column="id"/>
+        </collection>
+    </resultMap>
+
+
+
+    <select id="commentList" parameterType="inori.blog.transfer.blog.CommentListInVo" resultMap="commentMap">
+
+        SELECT
+            c.id, c.pid, c.avatar, c.nick_name, c.email, c.content, c.is_blogger, c.create_time
+        FROM tb_comment AS c
+        WHERE c.blog_id = #{inVo.blogId} AND c.pid = -1
+        ORDER BY c.create_time DESC
+
+    </select>
+
+
+
+    <select id="commentReplyList" resultMap="commentMap">
+
+        SELECT
+            c.id, c.pid, c.avatar, c.nick_name, c.email, c.content, c.is_blogger, c.create_time
+        FROM tb_comment AS c WHERE c.pid = #{id}
+
+    </select>
+
+
+
+    <select id="getTotalNumber" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+
+        SELECT COUNT(1) FROM tb_comment WHERE blog_id = #{blogId}
+
+    </select>
+
+
+
+    <insert id="commentCreate" parameterType="inori.blog.transfer.blog.CommentCreateInVo">
+
+        INSERT INTO tb_comment (blog_id, pid, avatar, nick_name, email, content)
+        VALUES (#{blogId}, #{pid}, #{avatar}, #{nickName}, #{email}, #{content})
+
+    </insert>
+
+
+
+    <delete id="commentDelete" parameterType="inori.blog.transfer.blog.CommentDeleteInVo">
+
+        DELETE FROM tb_comment WHERE id = #{id}
+
+    </delete>
+
+
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.TypeMapper">
+
+
+
+    <select id="typeList" parameterType="inori.blog.transfer.type.TypeListInVo" resultType="inori.blog.transfer.type.TypeListOutVoRecords">
+
+        SELECT t.id, t.name FROM tb_type AS t ORDER BY t.create_time ASC
+
+    </select>
+
+
+
+</mapper>

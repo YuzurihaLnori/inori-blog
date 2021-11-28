@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.IndexMapper">
+
+
+
+    <select id="indexList" parameterType="inori.blog.transfer.index.IndexListInVo" resultType="inori.blog.transfer.index.IndexListOutVoRecords">
+
+        SELECT
+            b.id, r.path AS firstPicturePath, b.title, b.views, IFNULL(c.comment_total, 0) AS commentTotal,
+            t.name AS typeName, b.description, DATE_FORMAT(b.create_time, '%Y-%m-%d') AS createTime
+        FROM tb_blog AS b
+            LEFT JOIN tb_res AS r ON b.first_picture = r.id
+            LEFT JOIN (SELECT blog_id, COUNT(blog_id) AS comment_total FROM tb_comment GROUP BY blog_id) AS c ON b.id = c.blog_id
+            LEFT JOIN tb_type AS t ON b.type_id = t.id
+        <where>
+            <if test="inVo.typeId != null">
+                b.type_id = #{inVo.typeId}
+            </if>
+        </where>
+        ORDER BY b.create_time DESC
+
+    </select>
+
+
+
+    <select id="indexRecommendList" parameterType="inori.blog.transfer.index.IndexRecommendListInVo" resultType="inori.blog.transfer.index.IndexRecommendListOutVoRecords">
+
+        SELECT
+            b.id, r.path AS firstPicturePath, b.title, b.description
+        FROM tb_blog AS b
+            LEFT JOIN tb_res AS r ON b.first_picture = r.id
+        WHERE b.recommend = 1
+        ORDER BY b.update_time DESC
+
+    </select>
+
+
+
+</mapper>

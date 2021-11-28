@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.ArchivesMapper">
+
+
+
+    <select id="archivesList" parameterType="inori.blog.transfer.archives.ArchivesListInVo" resultType="inori.blog.transfer.archives.ArchivesListOutVoRecords">
+
+        SELECT b.id, b.title, DATE_FORMAT(b.create_time, '%Y-%m-%d') AS createTime FROM tb_blog AS b ORDER BY createTime DESC
+
+    </select>
+
+
+
+</mapper>

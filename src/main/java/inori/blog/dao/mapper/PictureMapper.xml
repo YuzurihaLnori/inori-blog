@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.PictureMapper">
+
+
+
+    <select id="pictureList" parameterType="inori.blog.transfer.picture.PictureListInVo" resultType="inori.blog.transfer.picture.PictureListOutVoRecords">
+
+        SELECT
+            r.path AS picturePath, p.title, p.address, p.description, DATE_FORMAT(p.create_time, '%Y-%m-%d') AS createTime
+        FROM tb_picture AS p
+            LEFT JOIN tb_res AS r ON p.picture = r.id
+        ORDER BY p.create_time DESC
+
+    </select>
+
+
+
+</mapper>

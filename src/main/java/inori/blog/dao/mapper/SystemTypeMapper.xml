@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.SystemTypeMapper">
+
+
+
+    <select id="systemTypeList" parameterType="inori.blog.transfer.systemtype.SystemTypeListInVo" resultType="inori.blog.transfer.systemtype.SystemTypeListOutVoRecords">
+
+        SELECT t.id, t.name, t.update_time FROM tb_type AS t ORDER BY t.update_time DESC
+
+    </select>
+
+
+
+    <insert id="systemTypeCreate" parameterType="inori.blog.transfer.systemtype.SystemTypeCreateInVo">
+
+        INSERT INTO tb_type (`name`) VALUES (#{typeName})
+
+    </insert>
+
+
+
+    <update id="systemTypeUpdate" parameterType="inori.blog.transfer.systemtype.SystemTypeUpdateInVo">
+
+        UPDATE tb_type SET `name` = #{typeName} WHERE id = #{id}
+
+    </update>
+
+
+
+    <delete id="systemTypeDelete" parameterType="inori.blog.transfer.systemtype.SystemTypeDeleteInVo">
+
+        DELETE FROM tb_type WHERE id = #{id}
+
+    </delete>
+
+
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.SystemPictureMapper">
+
+
+
+    <select id="systemPictureList" parameterType="inori.blog.transfer.systeimpicture.SystemPictureListInVo" resultType="inori.blog.transfer.systeimpicture.SystemPictureListOutVoRecords">
+
+        SELECT
+            p.id, p.picture, r.path AS picturePath, p.title, p.address, p.description, p.update_time
+        FROM tb_picture AS p
+            LEFT JOIN tb_res AS r ON p.picture = r.id
+        ORDER BY p.update_time DESC
+
+    </select>
+
+
+
+    <insert id="systemPictureCreate" parameterType="inori.blog.transfer.systeimpicture.SystemPictureCreateInVo">
+
+        INSERT INTO tb_picture (picture, title, address, description)
+        VALUES (#{picture}, #{title}, #{address}, #{description})
+
+    </insert>
+
+
+
+    <update id="systemPictureUpdate" parameterType="inori.blog.transfer.systeimpicture.SystemPictureUpdateInVo">
+
+        UPDATE tb_picture SET
+            picture = #{picture}, title = #{title}, address = #{address}, description = #{description}
+        WHERE id = #{id}
+
+    </update>
+
+
+
+    <delete id="systemPictureDelete" parameterType="inori.blog.transfer.systeimpicture.SystemPictureDeleteInVo">
+
+        DELETE FROM tb_picture WHERE id = #{id}
+
+    </delete>
+
+
+
+</mapper>

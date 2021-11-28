@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.UserMapper">
+
+
+
+    <select id="userInfo" parameterType="java.lang.Integer" resultType="inori.blog.model.User">
+
+        SELECT
+            u.id, r.path AS avatarUrl, u.name, u.email
+        FROM tb_user AS u
+            LEFT JOIN tb_res AS r ON u.avatar = r.id
+        WHERE u.id = #{userId}
+
+    </select>
+
+
+
+</mapper>

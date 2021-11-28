@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="inori.blog.dao.SearchMapper">
+
+
+
+    <select id="searchDetail" parameterType="java.lang.Integer" resultType="inori.blog.transfer.search.SearchListOutVoRecords">
+
+        SELECT
+            b.id, r.path AS firstPicturePath, b.title, b.views, IFNULL(c.comment_total, 0) AS commentTotal,
+            t.name AS typeName, b.description, DATE_FORMAT(b.create_time, '%Y-%m-%d') AS createTime
+        FROM tb_blog AS b
+            LEFT JOIN tb_res AS r ON b.first_picture = r.id
+            LEFT JOIN (SELECT blog_id, COUNT(blog_id) AS comment_total FROM tb_comment GROUP BY blog_id) AS c ON b.id = c.blog_id
+            LEFT JOIN tb_type AS t ON b.type_id = t.id
+        WHERE b.id = #{id}
+
+    </select>
+
+
+
+</mapper>
