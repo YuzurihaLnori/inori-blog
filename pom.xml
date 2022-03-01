@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>inori.blog</groupId>
-    <artifactId>inori-blog</artifactId>
+    <artifactId>Inori-blog</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
