@@ -16,8 +16,6 @@ public class HttpContext {
     /**
      * 获取当前请求的Request对象
      *
-     * @author fengshuonan
-     * @Date 2018/7/23 下午3:44
      */
     public static HttpServletRequest getRequest() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -31,8 +29,6 @@ public class HttpContext {
     /**
      * 获取当前请求的Response对象
      *
-     * @author fengshuonan
-     * @Date 2018/7/23 下午3:44
      */
     public static HttpServletResponse getResponse() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

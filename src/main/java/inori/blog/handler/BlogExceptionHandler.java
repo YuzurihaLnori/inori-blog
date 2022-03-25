@@ -1,8 +1,10 @@
 package inori.blog.handler;
 
 
-import io.jsonwebtoken.ExpiredJwtException;
+import inori.blog.common.HttpContext;
+import inori.blog.common.response.ErrorResponseData;
 import inori.blog.common.response.RestResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 全局的的异常拦截器
@@ -55,9 +58,9 @@ public class BlogExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public RestResponse notFount(RuntimeException e) {
+    public ErrorResponseData notFount(RuntimeException e) {
         log.error("运行时异常:", e);
-        return RestResponse.error(e.getMessage());
+        return new ErrorResponseData(500, e.getMessage(), "Internal Server Error", Objects.requireNonNull(HttpContext.getRequest()).getRequestURI());
     }
 
 
