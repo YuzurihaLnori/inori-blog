@@ -31,7 +31,7 @@ spring:
         initial-interval: 10000ms
         max-interval: 30000ms
         multiplier: 2
-      exchange: search.search.exchange
+      exchange: inori.search.exchange
     publisher-confirms: true
 
   redis:
