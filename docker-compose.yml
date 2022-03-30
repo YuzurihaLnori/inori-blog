@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  inori-blog-portal:
+    build: .
+    restart: always
+    container_name: inori-blog
+    image: inori-blog
