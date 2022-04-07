@@ -12,4 +12,4 @@ EXPOSE 12008
 
 ADD ./target/inori.jar /inori-blog
 
-CMD sleep 5;java -jar inori.jar
+CMD sleep 10;java -jar -Xms128M -Xmx128M -server inori.jar
