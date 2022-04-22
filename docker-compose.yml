@@ -5,8 +5,7 @@ services:
     build:
       context: ./db
     environment:
-      MYSQL_USER: inori
-      MYSQL_PASS: inori
+      MYSQL_ROOT_PASSWORD: root
     restart: always
     container_name: inori-mysql
     image: inori-mysql
