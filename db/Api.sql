@@ -1,3 +1,7 @@
+CREATE DATABASE `db_blog`;
+
+USE `db_blog`;
+
 -- ----------------------------
 -- Table structure for tb_blog
 -- ----------------------------
