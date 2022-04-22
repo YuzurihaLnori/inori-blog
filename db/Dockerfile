@@ -1,4 +1,4 @@
-FROM mysql:5.7.25
+FROM inori-mysql:latest
 
 MAINTAINER Inori
 
