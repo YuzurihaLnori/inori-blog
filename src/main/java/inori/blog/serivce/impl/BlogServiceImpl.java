@@ -42,7 +42,7 @@ public class BlogServiceImpl implements IBlogService {
         try {
             blogMapper.blogViews(blogId);
 
-            File file = new File("/apps/dev/inori-blog-portal/" + blogId + ".html");
+            File file = new File("/apps/dev/inori-blog-portal/page" + blogId + ".html");
             if (!file.exists()) {
                 System.out.println("创建静态文件");
                 BlogDetailOutVo outVo = blogMapper.blogDetail(inVo);
@@ -57,7 +57,7 @@ public class BlogServiceImpl implements IBlogService {
                 context.setVariables(map);
 
                 // 创建输出流
-                writer = new PrintWriter(file);
+                writer = new PrintWriter(file, "UTF-8");
 
                 // 执行页面静态化方法
                 templateEngine.process("blog", context, writer);
