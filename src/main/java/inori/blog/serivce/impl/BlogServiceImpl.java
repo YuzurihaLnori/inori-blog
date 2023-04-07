@@ -44,6 +44,7 @@ public class BlogServiceImpl implements IBlogService {
 
             File file = new File("/apps/dev/inori-blog-portal/page/" + blogId + ".html");
             if (!file.exists()) {
+                System.out.println("创建静态文件");
                 BlogDetailOutVo outVo = blogMapper.blogDetail(inVo);
                 outVo.setFirstPicturePath(httpBase + outVo.getFirstPicturePath());
                 outVo.setContent(MarkdownUtil.markdownToHtmlExtensions(outVo.getContent()));
