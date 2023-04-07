@@ -42,7 +42,7 @@ public class BlogServiceImpl implements IBlogService {
         try {
             blogMapper.blogViews(blogId);
 
-            File file = new File("/apps/dev/inori-blog-portal/page/" + blogId + ".html");
+            File file = new File("/apps/dev/inori-blog-portal/" + blogId + ".html");
             if (!file.exists()) {
                 System.out.println("创建静态文件");
                 BlogDetailOutVo outVo = blogMapper.blogDetail(inVo);
