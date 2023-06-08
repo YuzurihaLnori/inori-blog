@@ -190,7 +190,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.zyxx.DeclareApplication</mainClass>
+                    <mainClass>inori.blog.InoriBlogApplication</mainClass>
                     <layout>ZIP</layout>
                     <includes>
                         <include>
