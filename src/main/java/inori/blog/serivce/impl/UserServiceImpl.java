@@ -28,6 +28,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Value("${inori.oss.httpBase}")
     private String httpBase;
 
+    @Value("${inori.token.tokenPrefix}")
+    private String tokenPrefix;
+
 
     @Override
     public RestResponse userLogin(BaseRestController controller, UserLoginInVo inVo) {
@@ -38,7 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (StringUtil.isNull(result)) {
             return RestResponse.fail("账号或密码不正确");
         }
-        return RestResponse.success(new UserLoginOutVo(JwtTokenUtil.generateToken("inori:admin:" + result.getId().toString())));
+        return RestResponse.success(new UserLoginOutVo(JwtTokenUtil.generateToken(tokenPrefix + result.getId().toString())));
     }
 
 

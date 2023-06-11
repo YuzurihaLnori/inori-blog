@@ -57,6 +57,8 @@ mybatis-plus:
     cache-enabled: true
 
 inori:
+  token:
+    tokenPrefix:
   oss:
     endpoint: http://oss-cn-hangzhou.aliyuncs.com
     accessKeyId:
